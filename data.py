@@ -4,6 +4,7 @@ import re as Re
 
 # O arquivo data faz apenas o tratamento dos dados
 
+
 def pega_arquivo():
 
     # VISAO GERAL
@@ -59,6 +60,5 @@ def pega_arquivo():
         return([[Tempo],[Posix],[Posiy]])
     else:
         print("arquivo nao selecionado")
-
 
 
