@@ -15,7 +15,7 @@ def pega_arquivo():
     # LEITURA ACEITA
     # "Tempo" \t "posiX" \t "posiY" \n
     #
-
+    #
 
     # pede ao usuario o arquivo para o tratamento de dados, guardando o diretorio.
 

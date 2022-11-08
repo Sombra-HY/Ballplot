@@ -1,46 +1,52 @@
-import tkinter
-
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
-# Implement the default Matplotlib key bindings.
-from matplotlib.backend_bases import key_press_handler
-from matplotlib.figure import Figure
-
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 
 
-root = tkinter.Tk()
-
-fig = Figure(figsize=(5, 4), dpi=100)
-t = np.arange(0, 3, .90)
-fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
-
-canvas = FigureCanvasTkAgg(fig, master=root)  # A tk.DrawingArea.
-canvas.draw()
-canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
-
-toolbar = NavigationToolbar2Tk(canvas, root)
-toolbar.update()
-canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+# O np cria uma lista com intervalo de dominio
+# tendo a sintaxe (inicio(incluido), fim(incluido), Qpontos)
+# exemplo, [1,3] --> (1>x<3) xE(conjunto)
+#
+# basicamente ele cria um conjuto com o intervalo passado a este...
+#
+#t = np.linspace(-10, 10, 200)
+#y = 2t +3
 
 
-def on_key_press(event):
-    print("you pressed {}".format(event.key))
-    key_press_handler(event, canvas, toolbar)
+# t = np.linspace()
+#  x = ((0.021 * (t**2)) - (0.34 * t) + 2.5)
 
 
-canvas.mpl_connect("key_press_event", on_key_press)
+
+# F(t) = 2t +3
+
+#fig, ax = plt.subplots(figsize=(6, 4), tight_layout=True)
+#plt.plot(x, y)
+#plt.plot([1,2], [2,2])
+
+#plt.grid()
+#plt.show()
+
+"""Vbx = ((0.021 * (t**2)) - (0.34 * t) + 2.5)  #velocidade da bola no eixo x no intante t
+Vby = ((-0.4 * t) + 1.8)  #velocidade da bola no eixo y no intante t"""
 
 
-def _quit():
-    root.quit()     # stops mainloop
-    root.destroy()  # this is necessary on Windows to prevent
-                    # Fatal Python Error: PyEval_RestoreThread: NULL tstate
+"""
+fig = plt.figure(tight_layout=True)
+gs = gridspec.GridSpec(2, 2)
 
+ax = fig.add_subplot(gs[0, :])
+ax.plot(np.arange(0, 1e6, 1000))
+ax.set_ylabel('YLabel0')
+ax.set_xlabel('XLabel0')
 
-button = tkinter.Button(master=root, text="Quit", command=_quit)
-button.pack(side=tkinter.BOTTOM)
-
-tkinter.mainloop()
-# If you put root.destroy() here, it will cause an error if the window is
-# closed with the window manager.
+for i in range(2):
+    ax = fig.add_subplot(gs[1, i])
+    ax.plot(np.arange(1., 0., -0.1) * 2000., np.arange(1., 0., -0.1))
+    ax.set_ylabel('YLabel1 %d' % i)
+    ax.set_xlabel('XLabel1 %d' % i)
+    if i == 0:
+        ax.tick_params(axis='x', rotation=55)
+fig.align_labels()  # same as fig.align_xlabels(); fig.align_ylabels()
+"
+plt.show()""
