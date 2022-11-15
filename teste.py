@@ -44,5 +44,4 @@ def interceptacao():
     print(yroboideal)
 
     return lista
-interceptacao()
 
