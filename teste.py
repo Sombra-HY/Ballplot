@@ -1,52 +1,48 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
+from data import pega_arquivo
+from math import sqrt
+
+t = 1
+Xbola = (-0.007 * (t**3)) - (0.17 * (t**2) + (2.5 * t) + 1)  #posição x da bola no instante t
+Ybola = ((0.2 * (t**2) + (1.8 * t) + 0.7)) #posição y da bola no instante t
+posicoesBOLA =pega_arquivo()
+def interceptacao():
+    Ri = 0.11
 
 
-# O np cria uma lista com intervalo de dominio
-# tendo a sintaxe (inicio(incluido), fim(incluido), Qpontos)
-# exemplo, [1,3] --> (1>x<3) xE(conjunto)
-#
-# basicamente ele cria um conjuto com o intervalo passado a este...
-#
-#t = np.linspace(-10, 10, 200)
-#y = 2t +3
+    while True:
+        posix = float(input("Digite a posicao X do robo: "))
+        if ((posix>=0) and (posix<=9)):
+            break
+        print("Digite valores entre [0 <= x <= 9]")
+    while True:
+        posiy = float(input("Digite a posicao Y do robo: "))
+        if ((posiy>=0) and (posiy<=6)):
+            break
+        print("Digite valores entre [0 <= x <= 6]")
 
 
-# t = np.linspace()
-#  x = ((0.021 * (t**2)) - (0.34 * t) + 2.5)
+    distancia = [(sqrt(((Xbola - posix)**2) + ((Ybola - posiy)**2)) + Ri)for Xbola, Ybola in zip(posicoesBOLA[1][0], posicoesBOLA[2][0])]
+    tempoRoboPonto = [((-23 + sqrt(529+800*d))/40) for d in distancia]
+    difTempo =[(posicoesBOLA[0][0][i]-tempoRoboPonto[i]) for i in range((len(posicoesBOLA[0][0])))]
+    lista=[]
+    for i in range(len(difTempo)):
 
+        if (difTempo[i]) > 0:
+            print("dif ==",posicoesBOLA[0][0][i]-difTempo[i])
+            lista.append([posicoesBOLA[0][0][i],posicoesBOLA[1][0][i],
+                         posicoesBOLA[2][0][i],distancia[i],tempoRoboPonto[i],difTempo[i]])
+            break
 
+    print(lista)
 
-# F(t) = 2t +3
+    velocidadex = (lista[0][1]-posix)/lista[0][0]
+    velocidadey = (lista[0][2]-posiy)/lista[0][0]
 
-#fig, ax = plt.subplots(figsize=(6, 4), tight_layout=True)
-#plt.plot(x, y)
-#plt.plot([1,2], [2,2])
+    xroboideal = posix + (velocidadex * lista[0][0])
+    yroboideal = posiy + (velocidadey * lista[0][0])
+    print(xroboideal)
+    print(yroboideal)
 
-#plt.grid()
-#plt.show()
+    return lista
+interceptacao()
 
-"""Vbx = ((0.021 * (t**2)) - (0.34 * t) + 2.5)  #velocidade da bola no eixo x no intante t
-Vby = ((-0.4 * t) + 1.8)  #velocidade da bola no eixo y no intante t"""
-
-
-"""
-fig = plt.figure(tight_layout=True)
-gs = gridspec.GridSpec(2, 2)
-
-ax = fig.add_subplot(gs[0, :])
-ax.plot(np.arange(0, 1e6, 1000))
-ax.set_ylabel('YLabel0')
-ax.set_xlabel('XLabel0')
-
-for i in range(2):
-    ax = fig.add_subplot(gs[1, i])
-    ax.plot(np.arange(1., 0., -0.1) * 2000., np.arange(1., 0., -0.1))
-    ax.set_ylabel('YLabel1 %d' % i)
-    ax.set_xlabel('XLabel1 %d' % i)
-    if i == 0:
-        ax.tick_params(axis='x', rotation=55)
-fig.align_labels()  # same as fig.align_xlabels(); fig.align_ylabels()
-"
-plt.show()""
