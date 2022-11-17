@@ -19,8 +19,7 @@ def pega_arquivo():
 
     # pede ao usuario o arquivo para o tratamento de dados, guardando o diretorio.
 
-    janela = tk().withdraw()
-    diretorio = askopenfilename(filetypes=(("Arquivos de texto", "*.txt"), ("Arquivos csv", "*.csv")))
+    diretorio ="trajetoria.txt"
 
     # Trataremos os dados do arquivo lendo os e os adicionando em uma "string"
 
@@ -56,9 +55,7 @@ def pega_arquivo():
             # retorno da lista em matriz
 
             # [[tempo],[posicao x],[posicao y]]
-
-        return([[Tempo],[Posix],[Posiy]])
-    else:
-        print("arquivo nao selecionado")
+            lista = ([[Tempo],[Posix],[Posiy]])
+        return lista
 
 

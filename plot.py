@@ -2,39 +2,34 @@ import data as dt
 import numpy as np
 import matplotlib.pyplot as plt
 from math import sqrt
-import tkinter
 
-arquivo = dt.pega_arquivo()
+
+def arquivo():
+    arquivo = dt.pega_arquivo()
+    return arquivo
+
+arquivo = arquivo()
+
 t = 1
-
 Xbola = (-0.007 * (t**3)) - (0.17 * (t**2) + (2.5 * t) + 1)  #posição x da bola no instante t
 Ybola = ((0.2 * (t**2) + (1.8 * t) + 0.7)) #posição y da bola no instante t
-
 Ri = 0.11
 
 
 def interceptacao():
-
-    while True:
-        posix = float(input("Digite a posicao X do robo: "))
-        if ((posix >= 0) and (posix <= 9)):
-            break
-        print("Digite valores entre [0 <= x <= 9]")
-    while True:
-        posiy = float(input("Digite a posicao Y do robo: "))
-        if ((posiy >= 0) and (posiy <= 6)):
-            break
-        print("Digite valores entre [0 <= x <= 6]")
+    posix = x
+    posiy = y
 
     distancia = [(sqrt(((Xbola - posix) ** 2) + ((Ybola - posiy) ** 2)) + Ri) for Xbola, Ybola in
                  zip(arquivo[1][0], arquivo[2][0])]
+
     tempoRoboPonto = [((-23 + sqrt(529 + 800 * d)) / 40) for d in distancia]
     difTempo = [(arquivo[0][0][i] - tempoRoboPonto[i]) for i in range((len(arquivo[0][0])))]
     lista = []
+
     for i in range(len(difTempo)):
 
         if (difTempo[i]) > 0:
-            print("dif ==", arquivo[0][0][i] - difTempo[i])
             lista.append([arquivo[0][0][i], arquivo[1][0][i],
                           arquivo[2][0][i], distancia[i], tempoRoboPonto[i], difTempo[i]])
             break
@@ -48,22 +43,19 @@ def interceptacao():
 
     return h, posix, velocidadex, posiy, velocidadey
 
-
-lista= interceptacao()
+lista = interceptacao()
 
 xroboideal = lista[1] + (lista[2] * lista[0])
 yroboideal = lista[3] + (lista[4] * lista[0])
 
-# a trajetori do robo ate a bola em x e y em funcao do tempo
+# a trajetoria do robo ate a bola em x e y em funcao do tempo
 posix = [(lista[1] + lista[2] * t) for t in np.arange(0, lista[0], 0.02)]
 posiy = [(lista[3] + lista[4] * t) for t in np.arange(0, lista[0], 0.02)]
-# s = 12 + 3v
-# s = 3
 tfinal = [arquivo[0][0][x] for x in range(0,len(posix))]
 
 def grafico_1():
     # Trajetoria do robo,bola no mapa XY
-
+    plt.clf()
     plt.title("Trajetoria da bola")
     plt.scatter([arquivo[1][0][x] for x in range(0,len(posix)+1)],
                 [arquivo[2][0][x] for x in range(0,len(posix)+1)], s=10, label="Bola")
@@ -78,7 +70,7 @@ def grafico_1():
 
 def grafico_2():
     # posicoes do robo e da bola em funcao do tempo
-
+    plt.clf()
     plt.title("Posições da bola e do robo")
     plt.scatter(tfinal, [arquivo[1][0][x] for x in range(0,len(tfinal))], s=10, label="Bola em X")
     plt.scatter(tfinal, [arquivo[2][0][x] for x in range(0,len(tfinal))], s=10, label="Bola em Y")
@@ -96,7 +88,7 @@ def grafico_2():
 
 def grafico_3():
     # Velocidade em funcao do Tempo
-
+    plt.clf()
     plt.title("Velocidade da bola e do robo em funcao do Tempo")
     plt.xlabel("Tempo (segundos)")
     plt.ylabel("Velocidade (M/S)")
@@ -120,6 +112,7 @@ def grafico_3():
     plt.show()
 
 def grafico_4():
+    plt.clf()
     plt.title("Aceleracao da bola e do robo em funcao do Tempo")
     plt.xlabel("Tempo (segundos)")
     plt.ylabel("Aceleracao (M/S²)")
@@ -144,13 +137,10 @@ def grafico_4():
 
 def grafico_5():
 
-
+    plt.clf()
     plt.title("Distancia relativa entre a bola e o robo em funcao do Tempo")
     plt.xlabel("Tempo (segundos)")
     plt.ylabel("Distancia (Metros)")
-
-
-
 
     Xbola = [arquivo[1][0][x] for x in range(len(tfinal))]
     Ybola = [arquivo[2][0][x] for x in range(len(tfinal))]
@@ -158,14 +148,9 @@ def grafico_5():
     robox = posix
     roboy = posiy
 
-    print(Xbola,Ybola,robox,roboy,sep="\n")
-    print(len(Xbola),len(Ybola),len(robox),len(roboy),sep="\n")
-
     dist =[]
     for Xrobo, Yrobo, Posix, Posiy in zip(Xbola,Ybola,robox,roboy):
         dist.append((sqrt(((Xrobo - Posix) ** 2) + ((Yrobo - Posiy) ** 2)) + Ri))
-
-    #distancia = [(sqrt(((Xbola - posix) ** 2) + ((Ybola - posiy) ** 2)) + Ri) for Xbola, Ybola, posix in zip([(arquivo[1][0][x]) for x in range(0,len(tfinal)+1)], [(arquivo[2][0][x]) for x in range(0,len(tfinal)+1)],[arquivo[1][0][x] for x in range(0,len(posix)+1)],[arquivo[2][0][x] for x in range(0,len(posix)+1)])]
 
 
     plt.scatter(tfinal, dist, s=10, label="Aceleracao da bola em x")
@@ -173,10 +158,3 @@ def grafico_5():
     plt.legend()
     plt.show()
 
-grafico_1()
-grafico_2()
-grafico_3()
-grafico_4()
-grafico_5()
-
-# 1 2 3 4
