@@ -1,3 +1,4 @@
+
 # importando arquivos e bibliotecas utilizadas no projeto
 import data as dt
 import numpy as np
