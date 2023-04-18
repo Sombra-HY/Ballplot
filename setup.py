@@ -6,6 +6,7 @@ build_exe_options = {"packages": ["os"],
                      "includes": ["tkinter","numpy","matplotlib","PIL"],
                      "include_files": ["imagens","img.ico"]}
 
+
 base = None
 if sys.platform == "win32":
     base = "Win32GUI"
